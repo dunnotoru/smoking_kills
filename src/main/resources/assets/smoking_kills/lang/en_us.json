@@ -1,3 +1,5 @@
 {
-  "item.smoking_kills.tobacco": "Tobacco"
+  "item.smoking_kills.tobacco": "Tobacco",
+  "block.smoking_kills.tobacco_crop": "Tobacco Crop",
+  "item.smoking_kills.tobacco_seeds": "Tobacco seeds"
 }

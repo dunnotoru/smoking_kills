@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "smoking_kills:block/tobacco_crop_stage0"
+  }
+}

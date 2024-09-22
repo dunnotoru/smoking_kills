@@ -2,8 +2,8 @@ package dunno.smoking_kills;
 
 import net.minecraft.item.Item;
 
-public class TobaccoItem extends Item {
-    public TobaccoItem(Settings settings) {
+public class Tobacco extends Item {
+    public Tobacco(Settings settings) {
         super(settings);
     }
 }
