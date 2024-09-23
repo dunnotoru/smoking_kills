@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "smoking_kills:chopped_dried_tobacco_leaves"
+    },
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "result": {
+    "item": "smoking_kills:rolled_up_cigarette"
+  }
+}

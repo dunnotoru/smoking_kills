@@ -1,5 +1,7 @@
 package dunno.smoking_kills;
 
+import dunno.smoking_kills.blocks.ModBlocks;
+import dunno.smoking_kills.items.ModItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;

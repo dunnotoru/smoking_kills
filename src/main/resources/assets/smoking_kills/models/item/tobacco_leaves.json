@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "smoking_kills:item/tobacco"
+    "layer0": "smoking_kills:item/tobacco_leaves"
   }
 }
