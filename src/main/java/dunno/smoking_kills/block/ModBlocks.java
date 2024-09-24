@@ -1,4 +1,4 @@
-package dunno.smoking_kills.blocks;
+package dunno.smoking_kills.block;
 
 import dunno.smoking_kills.SmokingKills;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;

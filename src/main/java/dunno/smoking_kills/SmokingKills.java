@@ -1,15 +1,13 @@
 package dunno.smoking_kills;
 
-import com.google.gson.JsonSyntaxException;
-import dunno.smoking_kills.blocks.ModBlocks;
-import dunno.smoking_kills.items.ModItems;
+import dunno.smoking_kills.block.ModBlocks;
+import dunno.smoking_kills.item.ModItems;
 import dunno.smoking_kills.recipes.ModRecipes;
+import dunno.smoking_kills.villager.ModVillagers;
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
+import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,5 +24,11 @@ public class SmokingKills implements ModInitializer {
 		LOGGER.info("Blocks initialized");
 		ModRecipes.initialize();
 		LOGGER.info("Recipes initialized");
+		ModVillagers.initialize();
+		LOGGER.info("Goofy Ahh Villagers initialized");
+
+		for (int i = 0; i < Registry.VILLAGER_PROFESSION.size(); i++) {
+			LOGGER.info(Registry.VILLAGER_PROFESSION.get(i).toString());
+		}
 	}
 }

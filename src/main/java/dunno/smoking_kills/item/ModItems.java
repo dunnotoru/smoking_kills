@@ -1,7 +1,7 @@
-package dunno.smoking_kills.items;
+package dunno.smoking_kills.item;
 
 import dunno.smoking_kills.SmokingKills;
-import dunno.smoking_kills.blocks.ModBlocks;
+import dunno.smoking_kills.block.ModBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;

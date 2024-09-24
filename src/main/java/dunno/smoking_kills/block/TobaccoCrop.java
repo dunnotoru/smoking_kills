@@ -1,6 +1,6 @@
-package dunno.smoking_kills.blocks;
+package dunno.smoking_kills.block;
 
-import dunno.smoking_kills.items.ModItems;
+import dunno.smoking_kills.item.ModItems;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.math.BlockPos;

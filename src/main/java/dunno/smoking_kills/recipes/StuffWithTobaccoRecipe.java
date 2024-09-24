@@ -1,7 +1,7 @@
 package dunno.smoking_kills.recipes;
 
 import dunno.smoking_kills.SmokingKills;
-import dunno.smoking_kills.items.ModItems;
+import dunno.smoking_kills.item.ModItems;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
