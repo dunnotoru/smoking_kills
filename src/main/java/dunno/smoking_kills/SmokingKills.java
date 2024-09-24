@@ -26,13 +26,5 @@ public class SmokingKills implements ModInitializer {
 		LOGGER.info("Blocks initialized");
 		ModRecipes.initialize();
 		LOGGER.info("Recipes initialized");
-		LOGGER.info(Registry.RECIPE_SERIALIZER.getIds().toString());
-		for (int i = 0; i < Registry.RECIPE_SERIALIZER.size(); i++) {
-			LOGGER.info(Registry.RECIPE_SERIALIZER.get(i).toString() + Registry.RECIPE_SERIALIZER.getId(Registry.RECIPE_SERIALIZER.get(i)));
-		}
-		String string = "minecraft:crafting_stuff_with_tobacco";
-		var a = (RecipeSerializer)Registry.RECIPE_SERIALIZER.getOrEmpty(new Identifier(string)).orElseThrow(() -> {
-			return new JsonSyntaxException("Invalid or unsupported recipe type '" + string + "'");
-		});
 	}
 }
