@@ -16,10 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"dunno.smoking_kills.Smoking_kills"
+          "dunno.smoking_kills.SmokingKills"
 		],
 		"client": [
-			"dunno.smoking_kills.Smoking_killsClient"
+			"dunno.smoking_kills.SmokingKillsClient"
 		]
 	},
 	"mixins": [

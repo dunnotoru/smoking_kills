@@ -1,6 +1,6 @@
 package dunno.smoking_kills.items;
 
-import dunno.smoking_kills.Smoking_kills;
+import dunno.smoking_kills.SmokingKills;
 import dunno.smoking_kills.blocks.ModBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.AliasedBlockItem;
@@ -35,7 +35,7 @@ public class ModItems {
     );
 
     public static Item register(Item item, String id) {
-        Identifier itemId = Identifier.of(Smoking_kills.MOD_ID, id);
+        Identifier itemId = Identifier.of(SmokingKills.MOD_ID, id);
         return Registry.register(Registry.ITEM, itemId, item);
     }
 
