@@ -26,9 +26,5 @@ public class SmokingKills implements ModInitializer {
 		LOGGER.info("Recipes initialized");
 		ModVillagers.initialize();
 		LOGGER.info("Goofy Ahh Villagers initialized");
-
-		for (int i = 0; i < Registry.VILLAGER_PROFESSION.size(); i++) {
-			LOGGER.info(Registry.VILLAGER_PROFESSION.get(i).toString());
-		}
 	}
 }

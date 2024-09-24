@@ -69,7 +69,6 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack craft(CraftingInventory inventory) {
-        SmokingKills.LOGGER.debug("START CRAFT");
         ItemStack output = new ItemStack(ModItems.ROLLED_UP_CIGARETTE, 1);
 
         int tobaccoAmount = 0;

@@ -10,6 +10,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class Cigarette extends Item {
+
+
     public Cigarette(Settings settings) {
 		super(settings);
     }
@@ -34,9 +36,11 @@ public class Cigarette extends Item {
                 ));
 
         user.getHungerManager().addExhaustion(2.5f * strength);
-        user.getItemCooldownManager().set(this, 40);
-        heldStack.decrement(1);
 
+        user.getItemCooldownManager().set(ModItems.CIGARETTE, 40);
+        user.getItemCooldownManager().set(ModItems.ROLLED_UP_CIGARETTE, 40);
+
+        heldStack.decrement(1);
         return TypedActionResult.consume(heldStack);
     }
 }

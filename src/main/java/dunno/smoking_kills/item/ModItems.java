@@ -15,6 +15,13 @@ public class ModItems {
             "rolled_up_cigarette"
     );
 
+    public static final Item CIGARETTE = register(
+            new Cigarette(new FabricItemSettings()
+                    .group(ItemGroup.MISC)
+                    .maxCount(1)),
+            "cigarette"
+    );
+
     public static final Item CIGARETTE_FILTER = register(
             new Item(new FabricItemSettings()
                     .group(ItemGroup.MISC)),
