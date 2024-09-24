@@ -13,10 +13,14 @@ import net.minecraft.world.World;
 public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
     private static final Ingredient PAPER;
     private static final Ingredient STRENGTH_MODIFIER;
+    private static final Ingredient FILTER;
+
+    private static final int MAX_TOBACCO_AMOUNT = 3;
 
     static {
         PAPER = Ingredient.ofItems(new ItemConvertible[] { Items.PAPER });
         STRENGTH_MODIFIER = Ingredient.ofItems(new ItemConvertible[] {ModItems.CHOPPED_DRIED_TOBACCO_LEAVES });
+        FILTER = Ingredient.ofItems(new ItemConvertible[] { ModItems.CIGARETTE_FILTER });
     }
 
     public StuffWithTobaccoRecipe(Identifier id) {
@@ -29,9 +33,9 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
             return false;
         }
 
-        SmokingKills.LOGGER.debug("trying match");
         int i = 0;
         boolean hasPaper = false;
+        boolean hasFilter = false;
 
         for (int j = 0; j < inventory.size(); j++) {
             ItemStack itemStack = inventory.getStack(j);
@@ -48,14 +52,18 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
                 hasPaper = true;
             } else if (STRENGTH_MODIFIER.test(itemStack)) {
                 i++;
-                if (i > 3) {
+                if (i > MAX_TOBACCO_AMOUNT) {
                     return false;
                 }
-                SmokingKills.LOGGER.debug("TOBACCO");
+            } else if (FILTER.test(itemStack)) {
+                if (hasFilter) {
+                    return false;
+                }
+
+                hasFilter = true;
             }
         }
 
-        SmokingKills.LOGGER.debug("WTF");
         return hasPaper && i >= 1;
     }
 
@@ -65,6 +73,7 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
         ItemStack output = new ItemStack(ModItems.ROLLED_UP_CIGARETTE, 1);
 
         int tobaccoAmount = 0;
+        boolean hasFilter = false;
         for (int i = 0; i < inventory.size(); i++) {
             ItemStack itemStack = inventory.getStack(i);
             if (itemStack.isEmpty()) {
@@ -72,10 +81,13 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
             }
             if (STRENGTH_MODIFIER.test(itemStack)) {
                 tobaccoAmount++;
+            } else if (FILTER.test(itemStack)) {
+                hasFilter = true;
             }
         }
 
         output.getOrCreateNbt().putInt("Strength", tobaccoAmount);
+        output.getOrCreateNbt().putBoolean("HasFilter", hasFilter);
 
         return output;
     }
@@ -92,8 +104,6 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        SmokingKills.LOGGER.debug("SKIBIDI getting serializer");
-        SmokingKills.LOGGER.debug(ModRecipes.STUFF_WITH_TOBACCO.toString());
         return ModRecipes.STUFF_WITH_TOBACCO;
     }
 }

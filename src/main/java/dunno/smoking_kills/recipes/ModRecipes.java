@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 
 public class ModRecipes {
     public static final SpecialRecipeSerializer<StuffWithTobaccoRecipe> STUFF_WITH_TOBACCO
-            = (SpecialRecipeSerializer<StuffWithTobaccoRecipe>) register("crafting_stuff_with_tobacco", new SpecialRecipeSerializer<StuffWithTobaccoRecipe>(StuffWithTobaccoRecipe::new));
+            = register("crafting_stuff_with_tobacco", new SpecialRecipeSerializer<StuffWithTobaccoRecipe>(StuffWithTobaccoRecipe::new));
 
     public static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String id, S serializer) {
         SmokingKills.LOGGER.info("REGISTER SERIALIZER");

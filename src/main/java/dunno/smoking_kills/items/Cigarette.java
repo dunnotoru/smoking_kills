@@ -27,23 +27,8 @@ public class Cigarette extends Item {
         }
 
         ItemStack heldStack = user.getStackInHand(hand);
-        ItemStack lighterStack;
-        if (hand.name().equals("MAIN_HAND")) {
-            lighterStack = user.getOffHandStack();
-        } else {
-            lighterStack = user.getMainHandStack();
-        }
-
-        Ingredient LIGHTER = Ingredient.ofItems(new ItemConvertible[]{Items.FLINT_AND_STEEL });
-        if (!LIGHTER.test(lighterStack)) {
-            return TypedActionResult.fail(heldStack);
-        }
-
-        lighterStack.damage(1, user, (x) -> {
-            SmokingKills.LOGGER.info(x.toString());
-        });
-        
         int strength = heldStack.getOrCreateNbt().getInt("Strength");
+        boolean hasFilter = heldStack.getOrCreateNbt().getBoolean("HasFilter");
 
         user.addStatusEffect(
                 new StatusEffectInstance(
@@ -54,10 +39,10 @@ public class Cigarette extends Item {
                         StatusEffects.SPEED, 1200, Math.max(strength - 1, 0), true, false
                 ));
 
-        user.getHungerManager().addExhaustion(5);
+        user.getHungerManager().addExhaustion(2.5f * strength);
         user.getItemCooldownManager().set(this, 40);
-
         heldStack.decrement(1);
-        return TypedActionResult.success(heldStack);
+
+        return TypedActionResult.consume(heldStack);
     }
 }
