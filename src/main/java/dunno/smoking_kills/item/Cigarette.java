@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -33,11 +34,6 @@ public class Cigarette extends Item {
     }
 
     @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        int useDuration = this.getMaxUseTime(stack) - remainingUseTicks;
-    }
-
-    @Override
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.BOW;
     }
@@ -50,13 +46,19 @@ public class Cigarette extends Item {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (world.isClient()) {
+            float distance = 0.5f;
+            double yaw = Math.toRadians(user.getHeadYaw());
+            world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                    user.getX() - Math.sin(yaw) * distance, user.getEyeY(), user.getZ() + Math.cos(yaw) * distance,
+                    -Math.sin(yaw) * 0.01,0.01, Math.cos(yaw) * 0.01);
             return stack;
         }
 
-        if (user.isPlayer()) {
-            smoke((PlayerEntity)user, user.getActiveHand());
-            stack.decrement(1);
+        if (!user.isPlayer()) {
+            return stack;
         }
+
+        smoke((PlayerEntity)user, user.getActiveHand());
 
         return stack;
     }
@@ -77,6 +79,7 @@ public class Cigarette extends Item {
                         StatusEffects.SPEED, 1200, Math.max(tobaccoAmount - 1, 0), true, false
                 ));
 
+        heldStack.decrement(1);
         user.getHungerManager().addExhaustion(2.5f * tobaccoAmount);
         user.getItemCooldownManager().set(ModItems.CIGARETTE, 40);
         user.getItemCooldownManager().set(ModItems.ROLLED_UP_CIGARETTE, 40);
