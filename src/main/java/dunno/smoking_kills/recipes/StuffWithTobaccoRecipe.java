@@ -44,7 +44,6 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
             }
 
             if (PAPER.test(itemStack)) {
-                SmokingKills.LOGGER.debug("PAPER");
                 if (hasPaper) {
                     return false;
                 }
@@ -85,7 +84,7 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
             }
         }
 
-        output.getOrCreateNbt().putInt("Strength", tobaccoAmount);
+        output.getOrCreateNbt().putInt("TobaccoAmount", tobaccoAmount);
         output.getOrCreateNbt().putBoolean("HasFilter", hasFilter);
 
         return output;

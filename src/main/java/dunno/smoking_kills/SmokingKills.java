@@ -6,8 +6,6 @@ import dunno.smoking_kills.recipes.ModRecipes;
 import dunno.smoking_kills.villager.ModVillagers;
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.util.registry.Registry;
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

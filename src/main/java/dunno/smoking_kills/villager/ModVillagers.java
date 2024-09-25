@@ -2,22 +2,18 @@ package dunno.smoking_kills.villager;
 
 import com.google.common.collect.ImmutableSet;
 import dunno.smoking_kills.SmokingKills;
-import dunno.smoking_kills.item.ModItems;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
-import net.fabricmc.fabric.impl.object.builder.TradeOfferInternals;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOfferList;
-import net.minecraft.village.VillagerProfession;
+import net.minecraft.village.*;
 import net.minecraft.world.poi.PointOfInterestType;
+
+import java.util.List;
 
 public class ModVillagers {
     public static final RegistryKey<PointOfInterestType> TOBACCO_POI_KEY = of("tobacco_poi");
@@ -56,18 +52,20 @@ public class ModVillagers {
     }
 
     public static void registerTrades() {
-        TradeOfferHelper.registerVillagerOffers(
-                TOBACCO_MASTER,
-                1,
-                factories -> {
-                    factories.add((entity, random) -> new TradeOffer(
-                            new ItemStack(Items.EMERALD, 1),
-                            new ItemStack(ModItems.ROLLED_UP_CIGARETTE),
-                            6,
-                            2,
-                            0.02f
-                    ));
-                });
+        var professionOffersMap = ModTradeOffers.PROFESSION_TO_LEVELED_TRADE;
+        for (VillagerProfession villagerProfession : professionOffersMap.keySet()) {
+            var levelOffersMap = professionOffersMap.get(villagerProfession);
+            for (Integer level : levelOffersMap.keySet()) {
+                TradeOfferHelper.registerVillagerOffers(
+                        villagerProfession,
+                        level,
+                        factories -> {
+                            factories.addAll(List.of(levelOffersMap.get(level)));
+                        }
+                );
+            }
+        }
+        
     }
 
     public static void initialize() {
