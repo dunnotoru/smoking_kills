@@ -6,8 +6,10 @@ import dunno.smoking_kills.recipes.ModRecipes;
 import dunno.smoking_kills.villager.ModVillagers;
 import net.fabricmc.api.ModInitializer;
 
+import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 
 public class SmokingKills implements ModInitializer {
 	public static final String MOD_ID = "smoking_kills";

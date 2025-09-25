@@ -1,9 +1,7 @@
 package dunno.smoking_kills.recipes;
 
-import dunno.smoking_kills.SmokingKills;
 import dunno.smoking_kills.item.ModItems;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.*;
@@ -18,9 +16,9 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
     private static final int MAX_TOBACCO_AMOUNT = 3;
 
     static {
-        PAPER = Ingredient.ofItems(new ItemConvertible[] { Items.PAPER });
-        STRENGTH_MODIFIER = Ingredient.ofItems(new ItemConvertible[] {ModItems.CHOPPED_DRIED_TOBACCO_LEAVES });
-        FILTER = Ingredient.ofItems(new ItemConvertible[] { ModItems.CIGARETTE_FILTER });
+        PAPER = Ingredient.ofItems(Items.PAPER);
+        STRENGTH_MODIFIER = Ingredient.ofItems(ModItems.CHOPPED_DRIED_TOBACCO_LEAVES);
+        FILTER = Ingredient.ofItems(ModItems.CIGARETTE_FILTER);
     }
 
     public StuffWithTobaccoRecipe(Identifier id) {
@@ -35,7 +33,6 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
 
         int i = 0;
         boolean hasPaper = false;
-        boolean hasFilter = false;
 
         for (int j = 0; j < inventory.size(); j++) {
             ItemStack itemStack = inventory.getStack(j);
@@ -54,12 +51,6 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
                 if (i > MAX_TOBACCO_AMOUNT) {
                     return false;
                 }
-            } else if (FILTER.test(itemStack)) {
-                if (hasFilter) {
-                    return false;
-                }
-
-                hasFilter = true;
             }
         }
 

@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class Cigarette extends Item {
     private static final int MAX_USE_TIME = 20;

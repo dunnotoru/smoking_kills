@@ -15,6 +15,14 @@ public class ModItems {
             "rolled_up_cigarette"
     );
 
+    public static final Item CIGARETTE_PACK = register(
+            new CigarettePack(new FabricItemSettings()
+                    .group(ItemGroup.TOOLS)
+                    .maxCount(1)
+                    .maxDamage(20)),
+            "cigarette_pack"
+    );
+
     public static final Item CIGARETTE = register(
             new Cigarette(new FabricItemSettings()
                     .group(ItemGroup.MISC)
@@ -57,5 +65,7 @@ public class ModItems {
         return Registry.register(Registry.ITEM, itemId, item);
     }
 
-    public static void initialize() { }
+    public static void initialize() {
+
+    }
 }
