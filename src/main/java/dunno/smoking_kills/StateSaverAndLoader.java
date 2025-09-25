@@ -12,9 +12,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class StateSaverAndLoader extends PersistentState {
-    public static final String CIGARETTES_SMOKED_NBT = "cigarettesSmoked";
-    public static final String PLAYERS_NBT = "players";
-
     public HashMap<UUID, SmokingData> players = new HashMap<>();
 
     @Override
@@ -23,11 +20,11 @@ public class StateSaverAndLoader extends PersistentState {
         players.forEach((uuid, playerData) -> {
             NbtCompound playerNbt = new NbtCompound();
 
-            playerNbt.putInt(CIGARETTES_SMOKED_NBT, playerData.cigarettesSmoked);
+            playerNbt.putInt(NbtKeys.CIGARETTES_SMOKED, playerData.cigarettesSmoked);
 
             playersNbt.put(uuid.toString(), playerNbt);
         });
-        nbt.put(PLAYERS_NBT, playersNbt);
+        nbt.put(NbtKeys.PLAYERS, playersNbt);
 
         return nbt;
     }
@@ -35,11 +32,11 @@ public class StateSaverAndLoader extends PersistentState {
     public static StateSaverAndLoader createFromNbt(NbtCompound tag) {
         StateSaverAndLoader state = new StateSaverAndLoader();
 
-        NbtCompound playersNbt = tag.getCompound(PLAYERS_NBT);
+        NbtCompound playersNbt = tag.getCompound(NbtKeys.PLAYERS);
         playersNbt.getKeys().forEach(key -> {
             SmokingData playerData = new SmokingData();
 
-            playerData.cigarettesSmoked = playersNbt.getCompound(key).getInt(CIGARETTES_SMOKED_NBT);
+            playerData.cigarettesSmoked = playersNbt.getCompound(key).getInt(NbtKeys.CIGARETTES_SMOKED);
 
             UUID uuid = UUID.fromString(key);
             state.players.put(uuid, playerData);

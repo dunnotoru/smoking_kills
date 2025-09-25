@@ -1,5 +1,6 @@
 package dunno.smoking_kills.item;
 
+import dunno.smoking_kills.NbtKeys;
 import dunno.smoking_kills.StateSaverAndLoader;
 import dunno.smoking_kills.data.SmokingData;
 import net.minecraft.client.item.TooltipContext;
@@ -9,7 +10,10 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.PotionItem;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.potion.Potion;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -61,8 +65,8 @@ public class Cigarette extends Item {
         //smoking effect WIP
         user.setCurrentHand(hand);
         ItemStack heldStack = user.getStackInHand(hand);
-        int tobaccoAmount = heldStack.getOrCreateNbt().getInt("TobaccoAmount");
-        boolean hasFilter = heldStack.getOrCreateNbt().getBoolean("HasFilter");
+        int tobaccoAmount = heldStack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = heldStack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
 
         user.addStatusEffect(
                 new StatusEffectInstance(
@@ -105,13 +109,17 @@ public class Cigarette extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        int tobaccoAmount = stack.getOrCreateNbt().getInt("TobaccoAmount");
-        boolean hasFilter = stack.getOrCreateNbt().getBoolean("HasFilter");
+        int tobaccoAmount = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
+        String flavor = stack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
 
+        tooltip.add(Text.of(flavor));
         tooltip.add(tobaccoAmountToStrength.getOrDefault(tobaccoAmount, Text.literal("unknown")));
+
         if (hasFilter) {
             tooltip.add(Text.translatable("itemTooltip.smoking_kills.filter"));
         }
+
         super.appendTooltip(stack, world, tooltip, context);
     }
 }

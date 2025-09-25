@@ -19,7 +19,9 @@ public class ModItems {
             new CigarettePack(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
-                    .maxDamage(20)),
+                    .maxDamage(20),
+                    new CigarettePackSettings()
+                            .strength(2)),
             "default_pack"
     );
 
@@ -27,7 +29,10 @@ public class ModItems {
             new CigarettePack(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
-                    .maxDamage(20)),
+                    .maxDamage(20),
+                    new CigarettePackSettings()
+                            .strength(1)
+                            .flavor("vanilla")),
             "vanilla_pack"
     );
 
@@ -35,7 +40,10 @@ public class ModItems {
             new CigarettePack(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
-                    .maxDamage(20)),
+                    .maxDamage(20),
+                    new CigarettePackSettings()
+                            .strength(2)
+                            .flavor("mint")),
             "mint_pack"
     );
 

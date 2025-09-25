@@ -1,20 +1,28 @@
 package dunno.smoking_kills.item;
 
+import dunno.smoking_kills.NbtKeys;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class CigarettePack extends Item {
+    private NbtCompound defaultCigaretteNbt;
+
+
     protected Item getItem() {
         return ModItems.CIGARETTE;
     }
 
-    public CigarettePack(Settings settings) {
+    public CigarettePack(Settings settings, CigarettePackSettings cigarettePackSettings) {
         super(settings);
+        defaultCigaretteNbt = new NbtCompound();
+        defaultCigaretteNbt.putInt(NbtKeys.CIG_STRENGTH, cigarettePackSettings.strength);
+        defaultCigaretteNbt.putString(NbtKeys.CIG_FLAVOR, cigarettePackSettings.flavor);
     }
 
     @Override
@@ -50,6 +58,7 @@ public class CigarettePack extends Item {
     private void pullCigarette(PlayerEntity user, ItemStack stack) {
         if (stack.getMaxDamage() - stack.getDamage() > 0) {
             ItemStack cig = new ItemStack(getItem());
+            cig.setNbt(defaultCigaretteNbt);
             if (user.giveItemStack(cig)) {
                 stack.damage(1, user, this::onBreak);
             }
