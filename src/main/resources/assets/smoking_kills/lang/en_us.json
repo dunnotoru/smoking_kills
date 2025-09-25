@@ -17,6 +17,7 @@
   "itemTooltip.smoking_kills.cigarette": "Strength",
   "itemTooltip.smoking_kills.filter": "Filter",
 
+  "tobacco_strength.smoking_kills.empty": "Empty",
   "tobacco_strength.smoking_kills.mild": "Mild",
   "tobacco_strength.smoking_kills.medium": "Medium",
   "tobacco_strength.smoking_kills.strong": "Strong"

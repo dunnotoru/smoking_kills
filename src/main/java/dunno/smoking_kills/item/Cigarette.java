@@ -1,5 +1,7 @@
 package dunno.smoking_kills.item;
 
+import dunno.smoking_kills.StateSaverAndLoader;
+import dunno.smoking_kills.data.SmokingData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -24,14 +26,14 @@ public class Cigarette extends Item {
     private static final int MAX_USE_TIME = 20;
 
     private static final Map<Integer, MutableText> tobaccoAmountToStrength = Map.ofEntries(
-            Map.entry(0, Text.translatable("tobacco_strength.smoking_kills.mild")),
+            Map.entry(0, Text.translatable("tobacco_strength.smoking_kills.empty")),
             Map.entry(1, Text.translatable("tobacco_strength.smoking_kills.mild")),
             Map.entry(2, Text.translatable("tobacco_strength.smoking_kills.medium")),
             Map.entry(3, Text.translatable("tobacco_strength.smoking_kills.strong"))
     );
 
     public Cigarette(Settings settings) {
-		super(settings);
+        super(settings);
     }
 
     @Override
@@ -45,23 +47,14 @@ public class Cigarette extends Item {
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        if (world.isClient()) {
-            float distance = 0.5f;
-            double yaw = Math.toRadians(user.getHeadYaw());
-            world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
-                    user.getX() - Math.sin(yaw) * distance, user.getEyeY(), user.getZ() + Math.cos(yaw) * distance,
-                    -Math.sin(yaw) * 0.01,0.01, Math.cos(yaw) * 0.01);
-            return stack;
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if (world.isClient) {
+            return TypedActionResult.pass(user.getStackInHand(hand));
         }
 
-        if (!user.isPlayer()) {
-            return stack;
-        }
+        user.setCurrentHand(hand);
 
-        smoke((PlayerEntity)user, user.getActiveHand());
-
-        return stack;
+        return TypedActionResult.consume(user.getStackInHand(hand));
     }
 
     private void smoke(PlayerEntity user, Hand hand) {
@@ -86,17 +79,29 @@ public class Cigarette extends Item {
         user.getItemCooldownManager().set(ModItems.ROLLED_UP_CIGARETTE, 40);
     }
 
+
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (world.isClient) {
-            return TypedActionResult.pass(user.getStackInHand(hand));
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        if (world.isClient()) {
+            float distance = 0.5f;
+            double yaw = Math.toRadians(user.getHeadYaw());
+            world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                    user.getX() - Math.sin(yaw) * distance, user.getEyeY(), user.getZ() + Math.cos(yaw) * distance,
+                    -Math.sin(yaw) * 0.01, 0.01, Math.cos(yaw) * 0.01);
+            return stack;
         }
 
-        user.setCurrentHand(hand);
+        if (!user.isPlayer()) {
+            return stack;
+        }
 
-        return TypedActionResult.consume(user.getStackInHand(hand));
+        SmokingData state = StateSaverAndLoader.getPlayerState(user);
+        state.cigarettesSmoked += 1;
+
+        smoke((PlayerEntity) user, user.getActiveHand());
+
+        return stack;
     }
-
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
