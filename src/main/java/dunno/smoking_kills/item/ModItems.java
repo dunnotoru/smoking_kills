@@ -15,12 +15,28 @@ public class ModItems {
             "rolled_up_cigarette"
     );
 
-    public static final Item CIGARETTE_PACK = register(
+    public static final Item DEFAULT_CIGARETTE_PACK = register(
             new CigarettePack(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
                     .maxDamage(20)),
-            "cigarette_pack"
+            "default_pack"
+    );
+
+    public static final Item VANILLA_CIGARETTE_PACK = register(
+            new CigarettePack(new FabricItemSettings()
+                    .group(ItemGroup.TOOLS)
+                    .maxCount(1)
+                    .maxDamage(20)),
+            "vanilla_pack"
+    );
+
+    public static final Item MINT_CIGARETTE_PACK = register(
+            new CigarettePack(new FabricItemSettings()
+                    .group(ItemGroup.TOOLS)
+                    .maxCount(1)
+                    .maxDamage(20)),
+            "mint_pack"
     );
 
     public static final Item CIGARETTE = register(

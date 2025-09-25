@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "smoking_kills:item/vanilla_pack"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damaged": 1
+      },
+      "model": "smoking_kills:item/vanilla_pack_open"
+    }
+  ]
+}

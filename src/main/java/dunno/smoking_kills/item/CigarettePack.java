@@ -1,6 +1,5 @@
 package dunno.smoking_kills.item;
 
-import dunno.smoking_kills.SmokingKills;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -10,6 +9,10 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class CigarettePack extends Item {
+    protected Item getItem() {
+        return ModItems.CIGARETTE;
+    }
+
     public CigarettePack(Settings settings) {
         super(settings);
     }
@@ -26,7 +29,7 @@ public class CigarettePack extends Item {
         ItemStack oppositeStack = user.getStackInHand(opposite);
         boolean isCrouching = user.getPose() == EntityPose.CROUCHING;
 
-        if (isCrouching && oppositeStack.isOf(ModItems.CIGARETTE)) {
+        if (isCrouching && oppositeStack.isOf(getItem())) {
             pushCigarette(user, packStack, oppositeStack);
         } else if (oppositeStack.isEmpty()) {
             pullCigarette(user, packStack);
@@ -46,7 +49,7 @@ public class CigarettePack extends Item {
 
     private void pullCigarette(PlayerEntity user, ItemStack stack) {
         if (stack.getMaxDamage() - stack.getDamage() > 0) {
-            ItemStack cig = new ItemStack(ModItems.CIGARETTE);
+            ItemStack cig = new ItemStack(getItem());
             if (user.giveItemStack(cig)) {
                 stack.damage(1, user, this::onBreak);
             }
