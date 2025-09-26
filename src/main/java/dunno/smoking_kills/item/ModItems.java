@@ -32,7 +32,7 @@ public class ModItems {
                     .maxDamage(20),
                     new CigarettePackSettings()
                             .strength(1)
-                            .flavor("vanilla")),
+                            .flavor("Vanilla")),
             "vanilla_pack"
     );
 
@@ -43,8 +43,8 @@ public class ModItems {
                     .maxDamage(20),
                     new CigarettePackSettings()
                             .strength(2)
-                            .flavor("mint")),
-            "mint_pack"
+                            .flavor("Menthol")),
+            "menthol_pack"
     );
 
     public static final Item CIGARETTE = register(

@@ -1,6 +1,7 @@
 package dunno.smoking_kills.item;
 
 import dunno.smoking_kills.NbtKeys;
+import dunno.smoking_kills.SmokingKills;
 import dunno.smoking_kills.StateSaverAndLoader;
 import dunno.smoking_kills.data.SmokingData;
 import net.minecraft.client.item.TooltipContext;
@@ -36,6 +37,8 @@ public class Cigarette extends Item {
             Map.entry(3, Text.translatable("tobacco_strength.smoking_kills.strong"))
     );
 
+    private static final CigaretteInternals internals = new CigaretteInternals();
+
     public Cigarette(Settings settings) {
         super(settings);
     }
@@ -61,28 +64,9 @@ public class Cigarette extends Item {
         return TypedActionResult.consume(user.getStackInHand(hand));
     }
 
-    private void smoke(PlayerEntity user, Hand hand) {
-        //smoking effect WIP
-        user.setCurrentHand(hand);
-        ItemStack heldStack = user.getStackInHand(hand);
-        int tobaccoAmount = heldStack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
-        boolean hasFilter = heldStack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
-
-        user.addStatusEffect(
-                new StatusEffectInstance(
-                        StatusEffects.REGENERATION, 40, Math.max(tobaccoAmount - 1, 0), true, false
-                ));
-        user.addStatusEffect(
-                new StatusEffectInstance(
-                        StatusEffects.SPEED, 1200, Math.max(tobaccoAmount - 1, 0), true, false
-                ));
-
-        heldStack.decrement(1);
-        user.getHungerManager().addExhaustion(2.5f * tobaccoAmount);
-        user.getItemCooldownManager().set(ModItems.CIGARETTE, 40);
-        user.getItemCooldownManager().set(ModItems.ROLLED_UP_CIGARETTE, 40);
+    private void smoke(PlayerEntity user, ItemStack stack) {
+        internals.smoke(user, stack);
     }
-
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
@@ -101,14 +85,14 @@ public class Cigarette extends Item {
 
         SmokingData state = StateSaverAndLoader.getPlayerState(user);
         state.cigarettesSmoked += 1;
-
-        smoke((PlayerEntity) user, user.getActiveHand());
+        this.smoke((PlayerEntity) user, stack);
+        stack.decrement(1);
 
         return stack;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         int tobaccoAmount = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
         boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
         String flavor = stack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
@@ -121,5 +105,52 @@ public class Cigarette extends Item {
         }
 
         super.appendTooltip(stack, world, tooltip, context);
+    }
+}
+
+class CigaretteInternals {
+    @FunctionalInterface
+    public interface SmokeDelegate {
+        void smoke(PlayerEntity user, ItemStack stack);
+    }
+
+    private final Map<String, SmokeDelegate> flavorsToEffects = Map.ofEntries(
+            Map.entry("Tobacco", this::tobacco),
+            Map.entry("Vanilla", this::vanilla),
+            Map.entry("Menthol", this::menthol)
+    );
+
+    public void smoke(PlayerEntity user, ItemStack stack) {
+        String flavor = stack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
+
+        SmokeDelegate delegate = flavorsToEffects.getOrDefault(flavor, this::tobacco);
+        delegate.smoke(user, stack);
+    }
+
+    private void tobacco(PlayerEntity user, ItemStack stack) {
+        SmokingKills.LOGGER.info("tobacco");
+        int tobaccoAmount = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
+
+        user.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.REGENERATION, 40, Math.max(tobaccoAmount - 1, 0), true, false
+                ));
+        user.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.SPEED, 1200, Math.max(tobaccoAmount - 1, 0), true, false
+                ));
+
+        user.getHungerManager().addExhaustion(2.5f * tobaccoAmount);
+        user.getItemCooldownManager().set(ModItems.CIGARETTE, 40);
+        user.getItemCooldownManager().set(ModItems.ROLLED_UP_CIGARETTE, 40);
+    }
+
+    private void vanilla(PlayerEntity user, ItemStack stack) {
+        SmokingKills.LOGGER.info("vanilla");
+    }
+
+    private void menthol(PlayerEntity user, ItemStack stack) {
+        SmokingKills.LOGGER.info("menthol");
     }
 }

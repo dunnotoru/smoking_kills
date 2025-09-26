@@ -1,5 +1,6 @@
 package dunno.smoking_kills.recipes;
 
+import dunno.smoking_kills.NbtKeys;
 import dunno.smoking_kills.item.ModItems;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -75,8 +76,8 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
             }
         }
 
-        output.getOrCreateNbt().putInt("TobaccoAmount", tobaccoAmount);
-        output.getOrCreateNbt().putBoolean("HasFilter", hasFilter);
+        output.getOrCreateNbt().putInt(NbtKeys.CIG_STRENGTH, tobaccoAmount);
+        output.getOrCreateNbt().putBoolean(NbtKeys.CIG_HAS_FILTER, hasFilter);
 
         return output;
     }

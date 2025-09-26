@@ -1,14 +1,14 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "smoking_kills:item/mint_pack"
+    "layer0": "smoking_kills:item/menthol_pack"
   },
   "overrides": [
     {
       "predicate": {
         "damaged": 1
       },
-      "model": "smoking_kills:item/mint_pack_open"
+      "model": "smoking_kills:item/menthol_pack_open"
     }
   ]
 }

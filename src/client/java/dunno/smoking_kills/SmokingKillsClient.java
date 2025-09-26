@@ -2,14 +2,19 @@ package dunno.smoking_kills;
 
 import dunno.smoking_kills.block.ModBlocks;
 import dunno.smoking_kills.data.SmokingData;
+import dunno.smoking_kills.item.ModItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 public class SmokingKillsClient implements ClientModInitializer {
     public static SmokingData playerData = new SmokingData();
+
+    public static Identifier FLAVOR = new Identifier(SmokingKills.MOD_ID, "flavor");
 
     @Override
     public void onInitializeClient() {
@@ -22,6 +27,20 @@ public class SmokingKillsClient implements ClientModInitializer {
                 assert client.player != null;
                 client.player.sendMessage(Text.literal("Initial cigarettes smoked: " + playerData.cigarettesSmoked));
             });
+        });
+
+        ModelPredicateProviderRegistry.register(FLAVOR, (itemStack, clientWorld, livingEntity, i) -> {
+            if (!itemStack.isOf(ModItems.CIGARETTE)) {
+                return 0f;
+            }
+
+            String flavor = itemStack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
+            return switch (flavor) {
+                case "Tobacco" -> 0f;
+                case "Vanilla" -> 0.1f;
+                case "Menthol" -> 0.2f;
+                default -> 0.0f;
+            };
         });
     }
 }

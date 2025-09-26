@@ -11,12 +11,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class CigarettePack extends Item {
-    private NbtCompound defaultCigaretteNbt;
-
-
-    protected Item getItem() {
-        return ModItems.CIGARETTE;
-    }
+    private final NbtCompound defaultCigaretteNbt;
 
     public CigarettePack(Settings settings, CigarettePackSettings cigarettePackSettings) {
         super(settings);
@@ -35,18 +30,25 @@ public class CigarettePack extends Item {
 
         Hand opposite = hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND;
         ItemStack oppositeStack = user.getStackInHand(opposite);
-        boolean isCrouching = user.getPose() == EntityPose.CROUCHING;
 
-        if (isCrouching && oppositeStack.isOf(getItem())) {
-            pushCigarette(user, packStack, oppositeStack);
-        } else if (oppositeStack.isEmpty()) {
+        if (oppositeStack.isEmpty()) {
             pullCigarette(user, packStack);
+            return TypedActionResult.success(packStack, false);
+        }
+
+        boolean isCrouching = user.getPose() == EntityPose.CROUCHING;
+        String flavor = oppositeStack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
+        if (isCrouching
+                && oppositeStack.isOf(ModItems.CIGARETTE)
+                && flavor.equalsIgnoreCase(defaultCigaretteNbt.getString(NbtKeys.CIG_FLAVOR))
+        ) {
+            pushCigarette(packStack, oppositeStack);
         }
 
         return TypedActionResult.success(packStack, false);
     }
 
-    private void pushCigarette(PlayerEntity user, ItemStack packStack, ItemStack cigStack) {
+    private void pushCigarette(ItemStack packStack, ItemStack cigStack) {
         if (cigStack.isDamaged() || packStack.getDamage() == 0) {
             return;
         }
@@ -57,7 +59,7 @@ public class CigarettePack extends Item {
 
     private void pullCigarette(PlayerEntity user, ItemStack stack) {
         if (stack.getMaxDamage() - stack.getDamage() > 0) {
-            ItemStack cig = new ItemStack(getItem());
+            ItemStack cig = new ItemStack(ModItems.CIGARETTE);
             cig.setNbt(defaultCigaretteNbt);
             if (user.giveItemStack(cig)) {
                 stack.damage(1, user, this::onBreak);

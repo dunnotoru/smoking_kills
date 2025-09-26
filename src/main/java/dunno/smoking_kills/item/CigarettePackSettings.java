@@ -2,7 +2,7 @@ package dunno.smoking_kills.item;
 
 public class CigarettePackSettings {
     public int strength = 1;
-    public String flavor = "tobacco";
+    public String flavor = "Tobacco";
 
     public CigarettePackSettings strength(int strength) {
         this.strength = strength;

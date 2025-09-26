@@ -2,5 +2,19 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "smoking_kills:item/cigarette"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "smoking_kills:flavor": 0.1
+      },
+      "model": "smoking_kills:item/cigarette_brown"
+    },
+    {
+      "predicate": {
+        "smoking_kills:flavor": 0.2
+      },
+      "model": "smoking_kills:item/cigarette_white"
+    }
+  ]
 }
