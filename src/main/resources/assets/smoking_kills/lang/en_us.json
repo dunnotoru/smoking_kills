@@ -17,6 +17,7 @@
   "cigarette.smoking_kills.strength": "Strength: %d",
   "cigarette.smoking_kills.flavor": "Flavor: %s",
   "cigarette.smoking_kills.filter": "Filter",
+  "cigarette.smoking_kills.lit": "Lit",
 
   "tobacco_strength.smoking_kills.empty": "Empty",
   "tobacco_strength.smoking_kills.mild": "Mild",

@@ -9,14 +9,22 @@ import net.minecraft.util.registry.Registry;
 
 public class ModItems {
     public static final Item ROLLED_UP_CIGARETTE = register(
-            new Cigarette(new FabricItemSettings()
+            new CigaretteItem(new FabricItemSettings()
                     .group(ItemGroup.MISC)
                     .maxCount(1)),
             "rolled_up_cigarette"
     );
 
+    public static final Item LIGHTER = register(
+            new LighterItem(new FabricItemSettings()
+                    .group(ItemGroup.TOOLS)
+                    .maxCount(1)
+                    .maxDamage(250)),
+            "lighter"
+    );
+
     public static final Item DEFAULT_CIGARETTE_PACK = register(
-            new CigarettePack(new FabricItemSettings()
+            new CigarettePackItem(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
                     .maxDamage(20),
@@ -26,7 +34,7 @@ public class ModItems {
     );
 
     public static final Item VANILLA_CIGARETTE_PACK = register(
-            new CigarettePack(new FabricItemSettings()
+            new CigarettePackItem(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
                     .maxDamage(20),
@@ -37,7 +45,7 @@ public class ModItems {
     );
 
     public static final Item MINT_CIGARETTE_PACK = register(
-            new CigarettePack(new FabricItemSettings()
+            new CigarettePackItem(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
                     .maxDamage(20),
@@ -48,9 +56,10 @@ public class ModItems {
     );
 
     public static final Item CIGARETTE = register(
-            new Cigarette(new FabricItemSettings()
+            new CigaretteItem(new FabricItemSettings()
                     .group(ItemGroup.MISC)
-                    .maxCount(1)),
+                    .maxCount(1)
+                    .maxDamage(100)),
             "cigarette"
     );
 
