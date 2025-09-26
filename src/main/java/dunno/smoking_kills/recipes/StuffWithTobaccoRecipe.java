@@ -14,7 +14,7 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
     private static final Ingredient STRENGTH_MODIFIER;
     private static final Ingredient FILTER;
 
-    private static final int MAX_TOBACCO_AMOUNT = 3;
+    private static final int MAX_TOBACCO_AMOUNT = 8;
 
     static {
         PAPER = Ingredient.ofItems(Items.PAPER);

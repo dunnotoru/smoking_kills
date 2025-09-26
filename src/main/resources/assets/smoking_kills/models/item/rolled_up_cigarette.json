@@ -1,6 +1,26 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "smoking_kills:item/rolled_up_cigarette"
-  }
+    "layer0": "smoking_kills:item/rolled_up_cigarette0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "smoking_kills:rolled_up_strength": 0.2
+      },
+      "model": "smoking_kills:item/rolled_up_cigarette1"
+    },
+    {
+      "predicate": {
+        "smoking_kills:rolled_up_strength": 0.3
+      },
+      "model": "smoking_kills:item/rolled_up_cigarette2"
+    },
+    {
+      "predicate": {
+        "smoking_kills:rolled_up_strength": 0.4
+      },
+      "model": "smoking_kills:item/rolled_up_cigarette3"
+    }
+  ]
 }

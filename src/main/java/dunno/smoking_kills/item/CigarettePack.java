@@ -18,6 +18,7 @@ public class CigarettePack extends Item {
         defaultCigaretteNbt = new NbtCompound();
         defaultCigaretteNbt.putInt(NbtKeys.CIG_STRENGTH, cigarettePackSettings.strength);
         defaultCigaretteNbt.putString(NbtKeys.CIG_FLAVOR, cigarettePackSettings.flavor);
+        defaultCigaretteNbt.putBoolean(NbtKeys.CIG_HAS_FILTER, true);
     }
 
     @Override

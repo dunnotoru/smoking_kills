@@ -11,21 +11,16 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.PotionItem;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.potion.Potion;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 public class Cigarette extends Item {
     private static final int MAX_USE_TIME = 20;
@@ -83,8 +78,7 @@ public class Cigarette extends Item {
             return stack;
         }
 
-        SmokingData state = StateSaverAndLoader.getPlayerState(user);
-        state.cigarettesSmoked += 1;
+
         this.smoke((PlayerEntity) user, stack);
         stack.decrement(1);
 
@@ -93,15 +87,15 @@ public class Cigarette extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        int tobaccoAmount = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
+        int strength = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
         boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
         String flavor = stack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
 
-        tooltip.add(Text.of(flavor));
-        tooltip.add(tobaccoAmountToStrength.getOrDefault(tobaccoAmount, Text.literal("unknown")));
+        tooltip.add(Text.translatable("cigarette.smoking_kills.flavor", flavor));
+        tooltip.add(Text.translatable("cigarette.smoking_kills.strength", strength));
 
         if (hasFilter) {
-            tooltip.add(Text.translatable("itemTooltip.smoking_kills.filter"));
+            tooltip.add(Text.translatable("cigarette.smoking_kills.filter"));
         }
 
         super.appendTooltip(stack, world, tooltip, context);
@@ -125,32 +119,83 @@ class CigaretteInternals {
 
         SmokeDelegate delegate = flavorsToEffects.getOrDefault(flavor, this::tobacco);
         delegate.smoke(user, stack);
-    }
 
-    private void tobacco(PlayerEntity user, ItemStack stack) {
-        SmokingKills.LOGGER.info("tobacco");
-        int tobaccoAmount = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
-        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
-
-        user.addStatusEffect(
-                new StatusEffectInstance(
-                        StatusEffects.REGENERATION, 40, Math.max(tobaccoAmount - 1, 0), true, false
-                ));
-        user.addStatusEffect(
-                new StatusEffectInstance(
-                        StatusEffects.SPEED, 1200, Math.max(tobaccoAmount - 1, 0), true, false
-                ));
-
-        user.getHungerManager().addExhaustion(2.5f * tobaccoAmount);
         user.getItemCooldownManager().set(ModItems.CIGARETTE, 40);
         user.getItemCooldownManager().set(ModItems.ROLLED_UP_CIGARETTE, 40);
     }
 
+    private void tobacco(PlayerEntity user, ItemStack stack) {
+        SmokingKills.LOGGER.info("tobacco");
+        int strength = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
+
+        SmokingData state = StateSaverAndLoader.getPlayerState(user);
+        int effectPower = strength;
+        if (hasFilter && effectPower > 1) {
+            effectPower -= 1;
+        }
+
+        state.smokePoints += effectPower;
+
+        user.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.REGENERATION, 40, Math.max(effectPower, 0), true, false
+                ));
+        user.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.HASTE, 1200, Math.max(effectPower, 0), true, false
+                ));
+
+        user.getHungerManager().addExhaustion(2.5f * strength);
+    }
+
     private void vanilla(PlayerEntity user, ItemStack stack) {
         SmokingKills.LOGGER.info("vanilla");
+        int strength = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
+
+        SmokingData state = StateSaverAndLoader.getPlayerState(user);
+        int effectPower = strength;
+        if (hasFilter && effectPower > 1) {
+            effectPower -= 1;
+        }
+
+        state.smokePoints += effectPower;
+
+        user.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.REGENERATION, 40, Math.max(effectPower, 0), true, false
+                ));
+        user.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.HEALTH_BOOST, 1200, Math.max(effectPower, 0), true, false
+                ));
+
+        user.getHungerManager().addExhaustion(2.5f * strength);
     }
 
     private void menthol(PlayerEntity user, ItemStack stack) {
         SmokingKills.LOGGER.info("menthol");
+        int strength = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
+
+        SmokingData state = StateSaverAndLoader.getPlayerState(user);
+        int effectPower = strength;
+        if (hasFilter && effectPower > 1) {
+            effectPower -= 1;
+        }
+
+        state.smokePoints += effectPower;
+
+        user.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.REGENERATION, 40, Math.max(effectPower, 0), true, false
+                ));
+        user.addStatusEffect(
+                new StatusEffectInstance(
+                        StatusEffects.RESISTANCE, 1200, Math.max(effectPower, 0), true, false
+                ));
+
+        user.getHungerManager().addExhaustion(2.5f * strength);
     }
 }

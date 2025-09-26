@@ -7,14 +7,10 @@ import dunno.smoking_kills.recipes.ModRecipes;
 import dunno.smoking_kills.villager.ModVillagers;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +36,7 @@ public class SmokingKills implements ModInitializer {
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             SmokingData playerState = StateSaverAndLoader.getPlayerState(handler.getPlayer());
             PacketByteBuf data = PacketByteBufs.create();
-            data.writeInt(playerState.cigarettesSmoked);
+            data.writeInt(playerState.smokePoints);
             server.execute(() -> {
                 ServerPlayNetworking.send(handler.getPlayer(), INITIAL_SYNC, data);
             });

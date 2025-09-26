@@ -14,8 +14,9 @@
 
   "entity.minecraft.villager.tobacco_master": "Tobacco Master",
 
-  "itemTooltip.smoking_kills.cigarette": "Strength",
-  "itemTooltip.smoking_kills.filter": "Filter",
+  "cigarette.smoking_kills.strength": "Strength: %d",
+  "cigarette.smoking_kills.flavor": "Flavor: %s",
+  "cigarette.smoking_kills.filter": "Filter",
 
   "tobacco_strength.smoking_kills.empty": "Empty",
   "tobacco_strength.smoking_kills.mild": "Mild",
