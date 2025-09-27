@@ -5,7 +5,6 @@ import dunno.smoking_kills.SmokingKills;
 import dunno.smoking_kills.StateSaverAndLoader;
 import dunno.smoking_kills.data.SmokingData;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -24,18 +23,20 @@ import java.util.List;
 import java.util.Map;
 
 public class CigaretteItem extends Item {
+    private final static NbtCompound defaultNbt = new NbtCompound();
+
     public CigaretteItem(Settings settings) {
         super(settings);
+        defaultNbt.putBoolean(NbtKeys.CIG_HAS_FILTER, false);
+        defaultNbt.putInt(NbtKeys.CIG_STRENGTH, 1);
+        defaultNbt.putString(NbtKeys.CIG_FLAVOR, "Tobacco");
+        defaultNbt.putBoolean(NbtKeys.CIG_LIT, false);
     }
 
     @Override
     public ItemStack getDefaultStack() {
         ItemStack stack = super.getDefaultStack();
-        NbtCompound nbt = new NbtCompound();
-        nbt.putBoolean(NbtKeys.CIG_HAS_FILTER, false);
-        nbt.putInt(NbtKeys.CIG_STRENGTH, 1);
-        nbt.putString(NbtKeys.CIG_FLAVOR, "Tobacco");
-        nbt.putBoolean(NbtKeys.CIG_LIT, false);
+        stack.getOrCreateNbt().put(NbtKeys.CIGARETTE, defaultNbt);
         return stack;
     }
 
@@ -52,11 +53,12 @@ public class CigaretteItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-        if (world.isClient) {
+        if (world.isClient()) {
             return TypedActionResult.pass(stack);
         }
 
-        if (!stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_LIT)) {
+        NbtCompound nbt = stack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE);
+        if (!nbt.getBoolean(NbtKeys.CIG_LIT)) {
             return TypedActionResult.fail(stack);
         }
 
@@ -92,10 +94,11 @@ public class CigaretteItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        int strength = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
-        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
-        String flavor = stack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
-        boolean isLit = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_LIT);
+        NbtCompound data = stack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE);
+        int strength = data.getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = data.getBoolean(NbtKeys.CIG_HAS_FILTER);
+        String flavor = data.getString(NbtKeys.CIG_FLAVOR);
+        boolean isLit = data.getBoolean(NbtKeys.CIG_LIT);
 
         tooltip.add(Text.translatable("cigarette.smoking_kills.flavor", flavor));
         tooltip.add(Text.translatable("cigarette.smoking_kills.strength", strength));

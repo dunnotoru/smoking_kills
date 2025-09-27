@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -30,12 +31,12 @@ public class LighterItem extends FlintAndSteelItem {
             return TypedActionResult.fail(stack);
         }
 
-        if (oppositeStack.getOrCreateNbt().getBoolean(NbtKeys.CIG_LIT)) {
+        if (oppositeStack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE).getBoolean(NbtKeys.CIG_LIT)) {
             return TypedActionResult.fail(stack);
         }
 
         user.stopUsingItem();
-        oppositeStack.getOrCreateNbt().putBoolean(NbtKeys.CIG_LIT, true);
+        oppositeStack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE).putBoolean(NbtKeys.CIG_LIT, true);
         stack.damage(1, user, x -> {
         });
 
@@ -50,7 +51,7 @@ public class LighterItem extends FlintAndSteelItem {
             return ActionResult.PASS;
         }
 
-        if (user.getPose() == EntityPose.CROUCHING) {
+        if (user.isSneaking()) {
             return super.useOnBlock(context);
         }
 

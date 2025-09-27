@@ -8,4 +8,5 @@ public abstract class NbtKeys {
 
     public static final String CIGARETTES_SMOKED = "CigarettesSmoked";
     public static final String PLAYERS = "Players";
+    public static final String CIGARETTE = "Cigarette";
 }

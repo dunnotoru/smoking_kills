@@ -12,9 +12,11 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.village.*;
 import net.minecraft.world.poi.PointOfInterestType;
+import org.apache.http.annotation.Obsolete;
 
 import java.util.List;
 
+@Obsolete
 public class ModVillagers {
     public static final RegistryKey<PointOfInterestType> TOBACCO_POI_KEY = of("tobacco_poi");
     public static final PointOfInterestType TOBACCO_POI = registerPOI("tobacco_poi", Blocks.GLASS);
