@@ -118,7 +118,7 @@ public class CigaretteItem extends Item {
 abstract class CigaretteInternals {
     @FunctionalInterface
     public interface SmokeDelegate {
-        void smoke(PlayerEntity user, ItemStack stack);
+        void smoke(PlayerEntity user, NbtCompound nbt);
     }
 
     private static final Map<String, SmokeDelegate> flavorsToEffects = Map.ofEntries(
@@ -131,16 +131,16 @@ abstract class CigaretteInternals {
         String flavor = stack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
 
         SmokeDelegate delegate = flavorsToEffects.getOrDefault(flavor, CigaretteInternals::tobacco);
-        delegate.smoke(user, stack);
+        delegate.smoke(user, stack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE));
 
         user.getItemCooldownManager().set(ModItems.CIGARETTE, 40);
         user.getItemCooldownManager().set(ModItems.ROLLED_UP_CIGARETTE, 40);
     }
 
-    private static void tobacco(PlayerEntity user, ItemStack stack) {
+    private static void tobacco(PlayerEntity user, NbtCompound nbt) {
         SmokingKills.LOGGER.info("tobacco");
-        int strength = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
-        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
+        int strength = nbt.getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = nbt.getBoolean(NbtKeys.CIG_HAS_FILTER);
 
         SmokingData state = StateSaverAndLoader.getPlayerState(user);
         int effectPower = strength;
@@ -162,10 +162,10 @@ abstract class CigaretteInternals {
         user.getHungerManager().addExhaustion(2.5f * strength);
     }
 
-    private static void vanilla(PlayerEntity user, ItemStack stack) {
+    private static void vanilla(PlayerEntity user, NbtCompound nbt) {
         SmokingKills.LOGGER.info("vanilla");
-        int strength = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
-        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
+        int strength = nbt.getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = nbt.getBoolean(NbtKeys.CIG_HAS_FILTER);
 
         SmokingData state = StateSaverAndLoader.getPlayerState(user);
         int effectPower = strength;
@@ -187,10 +187,10 @@ abstract class CigaretteInternals {
         user.getHungerManager().addExhaustion(2.5f * strength);
     }
 
-    private static void menthol(PlayerEntity user, ItemStack stack) {
+    private static void menthol(PlayerEntity user, NbtCompound nbt) {
         SmokingKills.LOGGER.info("menthol");
-        int strength = stack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
-        boolean hasFilter = stack.getOrCreateNbt().getBoolean(NbtKeys.CIG_HAS_FILTER);
+        int strength = nbt.getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = nbt.getBoolean(NbtKeys.CIG_HAS_FILTER);
 
         SmokingData state = StateSaverAndLoader.getPlayerState(user);
         int effectPower = strength;

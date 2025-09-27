@@ -35,7 +35,7 @@ public class SmokingKillsClient implements ClientModInitializer {
                 return 0f;
             }
 
-            String flavor = itemStack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
+            String flavor = itemStack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE).getString(NbtKeys.CIG_FLAVOR);
             return switch (flavor) {
                 case "Tobacco" -> 0f;
                 case "Vanilla" -> 0.1f;
@@ -49,7 +49,7 @@ public class SmokingKillsClient implements ClientModInitializer {
                 return 0f;
             }
 
-            int strength = itemStack.getOrCreateNbt().getInt(NbtKeys.CIG_STRENGTH);
+            int strength = itemStack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE).getInt(NbtKeys.CIG_STRENGTH);
 
             if (strength <= 0) {
                 return 0f;
