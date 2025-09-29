@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "smoking_kills:item/vanilla_pack_open"
+    "layer0": "smoking_kills:item/cigarette_pack3"
   }
 }

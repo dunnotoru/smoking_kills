@@ -27,7 +27,7 @@ public class LighterItem extends FlintAndSteelItem {
         Hand opposite = hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND;
         ItemStack oppositeStack = user.getStackInHand(opposite);
 
-        if (!oppositeStack.isOf(ModItems.CIGARETTE) && !oppositeStack.isOf(ModItems.ROLLED_UP_CIGARETTE)) {
+        if (!oppositeStack.isOf(ModItems.CIGARETTE)) {
             return TypedActionResult.fail(stack);
         }
 

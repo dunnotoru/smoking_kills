@@ -1,0 +1,47 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "smoking_kills:item/case"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "smoking_kills:item/cigarette_pack1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1,
+        "damaged": 1
+      },
+      "model": "smoking_kills:item/cigarette_pack_open1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "smoking_kills:item/cigarette_pack2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2,
+        "damaged": 1
+      },
+      "model": "smoking_kills:item/cigarette_pack_open2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3
+      },
+      "model": "smoking_kills:item/cigarette_pack3"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3,
+        "damaged": 1
+      },
+      "model": "smoking_kills:item/cigarette_pack_open3"
+    }
+  ]
+}

@@ -4,25 +4,33 @@ import dunno.smoking_kills.NbtKeys;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 public class CigarettePackItem extends Item {
-    private final NbtCompound defaultCigaretteNbt;
-
-    public CigarettePackItem(Settings settings, CigarettePackSettings cigarettePackSettings) {
+    public CigarettePackItem(Settings settings) {
         super(settings);
-        defaultCigaretteNbt = new NbtCompound();
-        defaultCigaretteNbt.putInt(NbtKeys.CIG_STRENGTH, cigarettePackSettings.strength);
-        defaultCigaretteNbt.putString(NbtKeys.CIG_FLAVOR, cigarettePackSettings.flavor);
-        defaultCigaretteNbt.putBoolean(NbtKeys.CIG_HAS_FILTER, true);
-        defaultCigaretteNbt.putBoolean(NbtKeys.CIG_LIT, false);
+    }
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group)) {
+            stacks.add(CigaretteUtil.createPack(1, "Tobacco", true, 0));
+            stacks.add(CigaretteUtil.createPack(1, "Tobacco", true, 1));
+            stacks.add(CigaretteUtil.createPack(1, "Vanilla", true, 2));
+            stacks.add(CigaretteUtil.createPack(1, "Menthol", true, 3));
+            stacks.add(CigaretteUtil.createPack(2, "Tobacco", true, 1));
+            stacks.add(CigaretteUtil.createPack(2, "Vanilla", true, 2));
+            stacks.add(CigaretteUtil.createPack(3, "Menthol", true, 3));
+        }
     }
 
     @Override
@@ -36,18 +44,16 @@ public class CigarettePackItem extends Item {
         Hand opposite = hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND;
         ItemStack oppositeStack = user.getStackInHand(opposite);
 
-        boolean isSneaking = user.isSneaking();
-        String flavor = oppositeStack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
-        if (isSneaking
-                && oppositeStack.isOf(ModItems.CIGARETTE)
-                && flavor.equalsIgnoreCase(defaultCigaretteNbt.getString(NbtKeys.CIG_FLAVOR))
-        ) {
-            pushCigarette(packStack, oppositeStack);
-        }
+//        boolean isSneaking = user.isSneaking();
+//        String flavor = oppositeStack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
+//        if (isSneaking
+//                && oppositeStack.isOf(ModItems.CIGARETTE)
+//                && )
+//        ) {
+//            pushCigarette(packStack, oppositeStack);
+//        }
 
-        if (!isSneaking) {
-            pullCigarette(user, packStack);
-        }
+        pullCigarette(user, packStack);
 
         return TypedActionResult.success(packStack, false);
     }
@@ -63,12 +69,12 @@ public class CigarettePackItem extends Item {
 
     private void pullCigarette(PlayerEntity user, ItemStack stack) {
         if (stack.getMaxDamage() - stack.getDamage() > 0) {
-            ItemStack cig = new ItemStack(ModItems.CIGARETTE);
 
-            cig.getOrCreateNbt().put(NbtKeys.CIGARETTE, defaultCigaretteNbt);
+            ItemStack cig = CigaretteUtil.createCigaretteFromPack(stack);
 
             if (user.giveItemStack(cig)) {
                 stack.damage(1, user, x -> {
+
                 });
             }
         }
@@ -76,9 +82,12 @@ public class CigarettePackItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        int strength = defaultCigaretteNbt.getInt(NbtKeys.CIG_STRENGTH);
-        boolean hasFilter = defaultCigaretteNbt.getBoolean(NbtKeys.CIG_HAS_FILTER);
-        String flavor = defaultCigaretteNbt.getString(NbtKeys.CIG_FLAVOR);
+
+        NbtCompound nbt = stack.getOrCreateNbt().getCompound(NbtKeys.PACK_CONTENTS);
+
+        int strength = nbt.getInt(NbtKeys.CIG_STRENGTH);
+        boolean hasFilter = nbt.getBoolean(NbtKeys.CIG_HAS_FILTER);
+        String flavor = nbt.getString(NbtKeys.CIG_FLAVOR);
 
         tooltip.add(Text.translatable("cigarette.smoking_kills.flavor", flavor));
         tooltip.add(Text.translatable("cigarette.smoking_kills.strength", strength));

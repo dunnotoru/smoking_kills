@@ -1,6 +1,7 @@
 package dunno.smoking_kills.recipes;
 
 import dunno.smoking_kills.NbtKeys;
+import dunno.smoking_kills.item.CigaretteUtil;
 import dunno.smoking_kills.item.ModItems;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -60,7 +61,6 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack craft(CraftingInventory inventory) {
-        ItemStack output = new ItemStack(ModItems.ROLLED_UP_CIGARETTE, 1);
 
         int tobaccoAmount = 0;
         boolean hasFilter = false;
@@ -76,10 +76,7 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
             }
         }
 
-        output.getOrCreateNbt().putInt(NbtKeys.CIG_STRENGTH, tobaccoAmount);
-        output.getOrCreateNbt().putBoolean(NbtKeys.CIG_HAS_FILTER, hasFilter);
-
-        return output;
+        return CigaretteUtil.createCigarette(tobaccoAmount, "Tobacco", hasFilter);
     }
 
     @Override
@@ -89,7 +86,7 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack getOutput() {
-        return new ItemStack(ModItems.ROLLED_UP_CIGARETTE);
+        return ModItems.CIGARETTE.getDefaultStack();
     }
 
     @Override

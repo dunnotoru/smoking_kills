@@ -9,4 +9,7 @@ public abstract class NbtKeys {
     public static final String CIGARETTES_SMOKED = "CigarettesSmoked";
     public static final String PLAYERS = "Players";
     public static final String CIGARETTE = "Cigarette";
+    public static final String PACK_CONTENTS = "PackContents";
+
+    public static final String CUSTOM_MODEL_DATA = "CustomModelData";
 }

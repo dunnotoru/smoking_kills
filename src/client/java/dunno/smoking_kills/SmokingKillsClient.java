@@ -30,22 +30,8 @@ public class SmokingKillsClient implements ClientModInitializer {
             });
         });
 
-        ModelPredicateProviderRegistry.register(FLAVOR, (itemStack, clientWorld, livingEntity, i) -> {
-            if (!itemStack.isOf(ModItems.CIGARETTE)) {
-                return 0f;
-            }
-
-            String flavor = itemStack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE).getString(NbtKeys.CIG_FLAVOR);
-            return switch (flavor) {
-                case "Tobacco" -> 0f;
-                case "Vanilla" -> 0.1f;
-                case "Menthol" -> 0.2f;
-                default -> 0.0f;
-            };
-        });
-
         ModelPredicateProviderRegistry.register(ROLLED_UP_STRENGTH, (itemStack, clientWorld, livingEntity, i) -> {
-            if (!itemStack.isOf(ModItems.ROLLED_UP_CIGARETTE)) {
+            if (!itemStack.isOf(ModItems.CIGARETTE)) {
                 return 0f;
             }
 
