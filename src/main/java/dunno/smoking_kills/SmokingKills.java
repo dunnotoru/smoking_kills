@@ -12,6 +12,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.timer.Timer;
+import net.minecraft.world.timer.TimerCallbackSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,5 +43,7 @@ public class SmokingKills implements ModInitializer {
                 ServerPlayNetworking.send(handler.getPlayer(), INITIAL_SYNC, data);
             });
         });
+
+//        Timer timer = new Timer(TimerCallbackSerializer.INSTANCE);
     }
 }

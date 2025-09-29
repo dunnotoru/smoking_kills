@@ -1,6 +1,7 @@
 package dunno.smoking_kills.item;
 
 import dunno.smoking_kills.NbtKeys;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
@@ -55,13 +56,13 @@ public abstract class CigaretteUtil {
         return cig;
     }
 
-    private static final Map<String, List<StatusEffectInstance>> effects = Map.ofEntries(
-            Map.entry("Tobacco", List.of(new StatusEffectInstance(StatusEffects.HASTE))),
-            Map.entry("Vanilla", List.of(new StatusEffectInstance(StatusEffects.HEALTH_BOOST))),
-            Map.entry("Menthol", List.of(new StatusEffectInstance(StatusEffects.RESISTANCE)))
+    private static final Map<String, List<StatusEffect>> effects = Map.ofEntries(
+            Map.entry("Tobacco", List.of(StatusEffects.HASTE)),
+            Map.entry("Vanilla", List.of(StatusEffects.HEALTH_BOOST)),
+            Map.entry("Menthol", List.of(StatusEffects.RESISTANCE))
     );
 
-    public static List<StatusEffectInstance> getEffects(ItemStack cigarette) {
+    public static List<StatusEffect> getEffects(ItemStack cigarette) {
         String flavor = cigarette.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE).getString(NbtKeys.CIG_FLAVOR);
         return effects.getOrDefault(flavor, effects.get("Tobacco"));
     }

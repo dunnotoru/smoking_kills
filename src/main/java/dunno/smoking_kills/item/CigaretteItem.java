@@ -6,6 +6,7 @@ import dunno.smoking_kills.StateSaverAndLoader;
 import dunno.smoking_kills.data.SmokingData;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -70,7 +71,7 @@ public class CigaretteItem extends Item {
     }
 
     private void smoke(PlayerEntity user, ItemStack stack) {
-        List<StatusEffectInstance> effects = CigaretteUtil.getEffects(stack);
+        List<StatusEffect> effects = CigaretteUtil.getEffects(stack);
 
         NbtCompound nbt = stack.getOrCreateNbt().getCompound(NbtKeys.CIGARETTE);
         int strength = nbt.getInt(NbtKeys.CIG_STRENGTH);
@@ -85,8 +86,8 @@ public class CigaretteItem extends Item {
 
         state.smokePoints += effectPower;
 
-        for (StatusEffectInstance effect : effects) {
-            user.addStatusEffect(effect);
+        for (StatusEffect effect : effects) {
+            user.addStatusEffect(new StatusEffectInstance(effect, 20 * (40 + 10 * strength), strength, true, false));
         }
 
         stack.decrement(1);
