@@ -31,6 +31,15 @@ public class CigaretteItem extends Item {
 
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group)) {
+            stacks.add(CigaretteUtil.createCigarette(1, "Tobacco", true, 0));
+            stacks.add(CigaretteUtil.createCigarette(2, "Tobacco", true, 0));
+            stacks.add(CigaretteUtil.createCigarette(3, "Tobacco", true, 0));
+            stacks.add(CigaretteUtil.createCigarette(4, "Tobacco", true, 0));
+            stacks.add(CigaretteUtil.createCigarette(2, "Tobacco", true, 1));
+            stacks.add(CigaretteUtil.createCigarette(2, "Vanilla", true, 2));
+            stacks.add(CigaretteUtil.createCigarette(2, "Menthol", true, 3));
+        }
     }
 
     @Override

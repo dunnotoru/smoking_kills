@@ -12,6 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.apache.http.annotation.Obsolete;
 
 import java.util.List;
 
@@ -23,13 +24,10 @@ public class CigarettePackItem extends Item {
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
         if (this.isIn(group)) {
-            stacks.add(CigaretteUtil.createPack(1, "Tobacco", true, 0));
-            stacks.add(CigaretteUtil.createPack(1, "Tobacco", true, 1));
-            stacks.add(CigaretteUtil.createPack(1, "Vanilla", true, 2));
-            stacks.add(CigaretteUtil.createPack(1, "Menthol", true, 3));
+            stacks.add(CigaretteUtil.createPack(2, "Tobacco", true, 0));
             stacks.add(CigaretteUtil.createPack(2, "Tobacco", true, 1));
             stacks.add(CigaretteUtil.createPack(2, "Vanilla", true, 2));
-            stacks.add(CigaretteUtil.createPack(3, "Menthol", true, 3));
+            stacks.add(CigaretteUtil.createPack(2, "Menthol", true, 3));
         }
     }
 
@@ -41,23 +39,12 @@ public class CigarettePackItem extends Item {
             return TypedActionResult.pass(packStack);
         }
 
-        Hand opposite = hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND;
-        ItemStack oppositeStack = user.getStackInHand(opposite);
-
-//        boolean isSneaking = user.isSneaking();
-//        String flavor = oppositeStack.getOrCreateNbt().getString(NbtKeys.CIG_FLAVOR);
-//        if (isSneaking
-//                && oppositeStack.isOf(ModItems.CIGARETTE)
-//                && )
-//        ) {
-//            pushCigarette(packStack, oppositeStack);
-//        }
-
         pullCigarette(user, packStack);
 
         return TypedActionResult.success(packStack, false);
     }
 
+    @Obsolete
     private void pushCigarette(ItemStack packStack, ItemStack cigStack) {
         if (packStack.getDamage() == 0) {
             return;
@@ -82,7 +69,6 @@ public class CigarettePackItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-
         NbtCompound nbt = stack.getOrCreateNbt().getCompound(NbtKeys.PACK_CONTENTS);
 
         int strength = nbt.getInt(NbtKeys.CIG_STRENGTH);

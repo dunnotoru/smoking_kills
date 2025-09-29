@@ -3,6 +3,7 @@ package dunno.smoking_kills.item;
 import dunno.smoking_kills.NbtKeys;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
@@ -16,7 +17,7 @@ public abstract class CigaretteUtil {
         nbt.putString(NbtKeys.CIG_FLAVOR, flavor);
         nbt.putBoolean(NbtKeys.CIG_HAS_FILTER, hasFilter);
 
-        ItemStack pack = ModItems.CIGARETTE_PACK.getDefaultStack();
+        ItemStack pack = new ItemStack(ModItems.CIGARETTE_PACK);
         pack.getOrCreateNbt().put(NbtKeys.PACK_CONTENTS, nbt);
         pack.getOrCreateNbt().putInt(NbtKeys.CUSTOM_MODEL_DATA, type);
         return pack;
@@ -28,7 +29,7 @@ public abstract class CigaretteUtil {
         nbt.putString(NbtKeys.CIG_FLAVOR, flavor);
         nbt.putBoolean(NbtKeys.CIG_HAS_FILTER, hasFilter);
 
-        ItemStack cig = ModItems.CIGARETTE.getDefaultStack();
+        ItemStack cig = new ItemStack(ModItems.CIGARETTE);
         cig.getOrCreateNbt().put(NbtKeys.CIGARETTE, nbt);
         return cig;
     }
@@ -39,7 +40,7 @@ public abstract class CigaretteUtil {
         nbt.putString(NbtKeys.CIG_FLAVOR, flavor);
         nbt.putBoolean(NbtKeys.CIG_HAS_FILTER, hasFilter);
 
-        ItemStack cig = ModItems.CIGARETTE.getDefaultStack();
+        ItemStack cig = new ItemStack(ModItems.CIGARETTE);
         cig.getOrCreateNbt().put(NbtKeys.CIGARETTE, nbt);
         cig.getOrCreateNbt().putInt(NbtKeys.CUSTOM_MODEL_DATA, type);
         return cig;
@@ -48,7 +49,7 @@ public abstract class CigaretteUtil {
     public static ItemStack createCigaretteFromPack(ItemStack pack) {
         NbtCompound nbt = pack.getOrCreateNbt();
 
-        ItemStack cig = ModItems.CIGARETTE.getDefaultStack();
+        ItemStack cig = new ItemStack(ModItems.CIGARETTE);
         cig.getOrCreateNbt().put(NbtKeys.CIGARETTE, nbt.getCompound(NbtKeys.PACK_CONTENTS));
         cig.getOrCreateNbt().putInt(NbtKeys.CUSTOM_MODEL_DATA, nbt.getInt(NbtKeys.CUSTOM_MODEL_DATA));
         return cig;

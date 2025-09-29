@@ -1,6 +1,5 @@
 package dunno.smoking_kills.recipes;
 
-import dunno.smoking_kills.NbtKeys;
 import dunno.smoking_kills.item.CigaretteUtil;
 import dunno.smoking_kills.item.ModItems;
 import net.minecraft.inventory.CraftingInventory;
@@ -29,7 +28,7 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean matches(CraftingInventory inventory, World world) {
-        if (world.isClient) {
+        if (world.isClient()) {
             return false;
         }
 
