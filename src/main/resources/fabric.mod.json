@@ -3,16 +3,15 @@
 	"id": "smoking_kills",
 	"version": "${version}",
 	"name": "smoking_kills",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Smoke break? Again?",
 	"authors": [
-		"Me!"
+		"dunnotoru"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/dunnotoru/smoking_kills"
 	},
 	"license": "CC0-1.0",
-	"icon": "tobacco.png",
+	"icon": "icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -22,13 +21,6 @@
 			"dunno.smoking_kills.SmokingKillsClient"
 		]
 	},
-	"mixins": [
-		"smoking_kills.mixins.json",
-		{
-			"config": "smoking_kills.client.mixins.json",
-			"environment": "client"
-		}
-	],
 	"depends": {
 		"fabricloader": ">=0.16.5",
 		"minecraft": "~1.19.2",

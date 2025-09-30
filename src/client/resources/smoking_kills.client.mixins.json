@@ -1,9 +1,9 @@
 {
 	"required": true,
-	"package": "dunno.smoking_kills.mixin.client",
+	"package": "dunno.smoking_kills",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
-		"ExampleClientMixin"
+
 	],
 	"injectors": {
 		"defaultRequire": 1
