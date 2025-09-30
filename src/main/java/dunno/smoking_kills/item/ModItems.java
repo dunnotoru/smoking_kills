@@ -4,7 +4,6 @@ import dunno.smoking_kills.SmokingKills;
 import dunno.smoking_kills.block.ModBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.*;
-import net.minecraft.potion.Potions;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -39,20 +38,20 @@ public class ModItems {
                     .group(ItemGroup.MISC))
     );
 
-    public static final Item TOBACCO_LEAVES = register(
-            "tobacco_leaves",
+    public static final Item TOBACCO = register(
+            "tobacco",
             new Item(new FabricItemSettings()
                     .group(ItemGroup.MISC))
     );
 
-    public static final Item DRIED_TOBACCO_LEAVES = register(
-            "dried_tobacco_leaves",
+    public static final Item DRIED_TOBACCO = register(
+            "dried_tobacco",
             new Item(new FabricItemSettings()
                     .group(ItemGroup.MISC))
     );
 
-    public static final Item CHOPPED_DRIED_TOBACCO_LEAVES = register(
-            "chopped_dried_tobacco_leaves",
+    public static final Item CHOPPED_DRIED_TOBACCO = register(
+            "chopped_dried_tobacco",
             new Item(new FabricItemSettings()
                     .group(ItemGroup.MISC))
     );

@@ -18,7 +18,7 @@ public class StuffWithTobaccoRecipe extends SpecialCraftingRecipe {
 
     static {
         PAPER = Ingredient.ofItems(Items.PAPER);
-        STRENGTH_MODIFIER = Ingredient.ofItems(ModItems.CHOPPED_DRIED_TOBACCO_LEAVES);
+        STRENGTH_MODIFIER = Ingredient.ofItems(ModItems.CHOPPED_DRIED_TOBACCO);
         FILTER = Ingredient.ofItems(ModItems.CIGARETTE_FILTER);
     }
 

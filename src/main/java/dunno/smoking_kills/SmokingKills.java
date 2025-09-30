@@ -73,6 +73,7 @@ public class SmokingKills implements ModInitializer {
                     int duration = 120 * state.smokePoints / 10;
                     player.addStatusEffect(new StatusEffectInstance(ModEffects.CRAVING, duration, 0, true, false));
                     state.lastSmokingTime = time + duration;
+                    state.smokePoints -= 1;
                 }
             }
         });
