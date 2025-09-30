@@ -12,17 +12,17 @@ import net.minecraft.util.registry.Registry;
 
 public class ModBlocks {
     public static final Block TOBACCO_CROP = register(
+            "tobacco_crop",
             new TobaccoCrop(FabricBlockSettings.of(Material.PLANT)
                     .nonOpaque()
                     .noCollision()
                     .ticksRandomly()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.CROP)),
-            "tobacco_crop",
             false
     );
 
-    public static Block register(Block block, String id, boolean registerItem) {
+    public static Block register(String id, Block block, boolean registerItem) {
         Identifier blockId = Identifier.of(SmokingKills.MOD_ID, id);
 
         if (registerItem) {
@@ -33,5 +33,6 @@ public class ModBlocks {
         return Registry.register(Registry.BLOCK, blockId, block);
     }
 
-    public static void initialize() { }
+    public static void initialize() {
+    }
 }

@@ -10,60 +10,60 @@ import net.minecraft.util.registry.Registry;
 
 public class ModItems {
     public static final Item LIGHTER = register(
+            "lighter",
             new LighterItem(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
-                    .maxDamage(250)),
-            "lighter"
+                    .maxDamage(250))
     );
 
     public static final Item CIGARETTE_PACK = register(
+            "cigarette_pack",
             new CigarettePackItem(new FabricItemSettings()
                     .group(ItemGroup.TOOLS)
                     .maxCount(1)
-                    .maxDamage(20)),
-            "cigarette_pack"
+                    .maxDamage(20))
     );
 
     public static final Item CIGARETTE = register(
+            "cigarette",
             new CigaretteItem(new FabricItemSettings()
                     .group(ItemGroup.MISC)
                     .maxCount(1)
-                    .maxDamage(100)),
-            "cigarette"
+                    .maxDamage(100))
     );
 
     public static final Item CIGARETTE_FILTER = register(
+            "cigarette_filter",
             new Item(new FabricItemSettings()
-                    .group(ItemGroup.MISC)),
-            "cigarette_filter"
+                    .group(ItemGroup.MISC))
     );
 
     public static final Item TOBACCO_LEAVES = register(
+            "tobacco_leaves",
             new Item(new FabricItemSettings()
-                    .group(ItemGroup.MISC)),
-            "tobacco_leaves"
+                    .group(ItemGroup.MISC))
     );
 
     public static final Item DRIED_TOBACCO_LEAVES = register(
+            "dried_tobacco_leaves",
             new Item(new FabricItemSettings()
-                    .group(ItemGroup.MISC)),
-            "dried_tobacco_leaves"
+                    .group(ItemGroup.MISC))
     );
 
     public static final Item CHOPPED_DRIED_TOBACCO_LEAVES = register(
+            "chopped_dried_tobacco_leaves",
             new Item(new FabricItemSettings()
-                    .group(ItemGroup.MISC)),
-            "chopped_dried_tobacco_leaves"
+                    .group(ItemGroup.MISC))
     );
 
     public static final Item TOBACCO_SEED = register(
+            "tobacco_seeds",
             new AliasedBlockItem(ModBlocks.TOBACCO_CROP, new FabricItemSettings()
-                    .group(ItemGroup.MISC)),
-            "tobacco_seeds"
+                    .group(ItemGroup.MISC))
     );
 
-    public static Item register(Item item, String id) {
+    public static Item register(String id, Item item) {
         Identifier itemId = Identifier.of(SmokingKills.MOD_ID, id);
         return Registry.register(Registry.ITEM, itemId, item);
     }
