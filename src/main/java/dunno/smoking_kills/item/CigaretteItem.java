@@ -4,6 +4,7 @@ import dunno.smoking_kills.NbtKeys;
 import dunno.smoking_kills.SmokingKills;
 import dunno.smoking_kills.StateSaverAndLoader;
 import dunno.smoking_kills.data.SmokingData;
+import dunno.smoking_kills.misc.ModEffects;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
@@ -96,7 +97,7 @@ public class CigaretteItem extends Item {
             user.addStatusEffect(new StatusEffectInstance(effect, 20 * (40 + 10 * strength), strength, true, false));
         }
 
-        user.removeStatusEffect(StatusEffects.SLOWNESS);
+        user.removeStatusEffect(ModEffects.CRAVING);
 
         stack.decrement(1);
 

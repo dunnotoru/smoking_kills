@@ -3,6 +3,7 @@ package dunno.smoking_kills;
 import dunno.smoking_kills.block.ModBlocks;
 import dunno.smoking_kills.data.SmokingData;
 import dunno.smoking_kills.item.ModItems;
+import dunno.smoking_kills.misc.ModEffects;
 import dunno.smoking_kills.recipes.ModRecipes;
 import dunno.smoking_kills.villager.ModVillagers;
 import net.fabricmc.api.ModInitializer;
@@ -38,6 +39,8 @@ public class SmokingKills implements ModInitializer {
         LOGGER.info("Recipes initialized");
         ModVillagers.initialize();
         LOGGER.info("Goofy Ahh Villagers initialized");
+        ModEffects.initialize();
+//        LOGGER.info("Effects initialized");
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             SmokingData playerState = StateSaverAndLoader.getPlayerState(handler.getPlayer());
@@ -62,13 +65,13 @@ public class SmokingKills implements ModInitializer {
                     return;
                 }
 
-//                LOGGER.info("pts:{}; times: {}-{}; mod: {} {}", state.smokePoints, time, state.lastSmokingTime, time - state.lastSmokingTime, 24000 / modifier);
+                LOGGER.info("pts:{}; times: {}-{}; mod: {} {}", state.smokePoints, time, state.lastSmokingTime, time - state.lastSmokingTime, 24000 / modifier);
 
                 long delay = time - state.lastSmokingTime;
                 long cravingTime = 24000 / modifier;
                 if (delay > cravingTime) {
                     int duration = 120 * state.smokePoints / 10;
-                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, duration, 1, true, false));
+                    player.addStatusEffect(new StatusEffectInstance(ModEffects.CRAVING, duration, 0, true, false));
                     state.lastSmokingTime = time + duration;
                 }
             }
