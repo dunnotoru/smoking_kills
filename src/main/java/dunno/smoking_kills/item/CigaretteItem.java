@@ -16,12 +16,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.core.appender.ManagerFactory;
 
 import java.util.List;
 
@@ -85,10 +87,16 @@ public class CigaretteItem extends Item {
         }
 
         state.smokePoints += effectPower;
+        MinecraftServer server =user.getServer();
+        if (server != null) {
+            state.lastSmokingTime = server.getTicks();
+        }
 
         for (StatusEffect effect : effects) {
             user.addStatusEffect(new StatusEffectInstance(effect, 20 * (40 + 10 * strength), strength, true, false));
         }
+
+        user.removeStatusEffect(StatusEffects.SLOWNESS);
 
         stack.decrement(1);
 
