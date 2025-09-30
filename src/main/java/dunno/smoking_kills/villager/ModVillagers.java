@@ -32,7 +32,7 @@ public class ModVillagers {
                         entry -> entry.matchesKey(type),
                         ImmutableSet.of(),
                         ImmutableSet.of(),
-                        SoundEvents.ENTITY_CREEPER_DEATH
+                        SoundEvents.ENTITY_VILLAGER_WORK_LIBRARIAN
 
             ));
     }
