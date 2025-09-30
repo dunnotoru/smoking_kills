@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/tinted_cross",
   "textures": {
-    "cross": "smoking_kills:block/tobacco_crop_stage0"
+    "cross": "smoking_kills:block/tobacco_crop_stage2"
   }
 }
