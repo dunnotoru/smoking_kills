@@ -52,7 +52,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "smoking_kills:tobacco_leaves"
+          "name": "smoking_kills:tobacco"
         }
       ],
       "conditions": [

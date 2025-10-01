@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "smoking_kills:tobacco_leaves"
+    "item": "smoking_kills:tobacco"
   },
-  "result": "smoking_kills:dried_tobacco_leaves",
+  "result": "smoking_kills:dried_tobacco",
   "experience": 0.1,
   "cookingtime": 100
 }
