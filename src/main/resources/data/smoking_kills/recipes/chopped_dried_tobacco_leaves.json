@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "smoking_kills:dried_tobacco_leaves"
+      "item": "smoking_kills:dried_tobacco"
     }
   ],
   "result":
   {
-    "item": "smoking_kills:chopped_dried_tobacco_leaves",
+    "item": "smoking_kills:chopped_dried_tobacco",
     "count": 16
   }
 }
